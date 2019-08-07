@@ -1,0 +1,69 @@
+apply plugin: 'com.android.application'
+
+apply plugin: 'kotlin-android'
+
+apply plugin: 'kotlin-android-extensions'
+
+apply plugin: 'kotlin-kapt'
+
+android {
+    compileSdkVersion 28
+    defaultConfig {
+        applicationId "com.reactivemobile.hsbctestapp"
+        minSdkVersion 21
+        targetSdkVersion 28
+        versionCode 1
+        versionName "1.0"
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+        debug {
+            applicationIdSuffix ".debug"
+            debuggable true
+        }
+    }
+}
+
+ext {
+    androidx_appcompat_version = "1.1.0-alpha05"
+    androidx_ktx_version = "1.2.0-alpha01"
+    androidx_fragment_version = "1.0.0"
+    rxjava2_version = "2.0.2"
+    retrofit2_version = "2.5.0"
+    retrofit2_adapter_version = "2.3.0"
+    support_library_version = "28.0.0"
+    dagger_version = "2.13"
+    junit_version = "4.12"
+    androidx_test_runner_version = "1.1.2-alpha02"
+    androidx_espresso_version = "3.2.0-alpha02"
+    recyclerview_version = "28.0.0"
+    okhttp_logging_interceptor_version = "3.12.1"
+    androidx_test_version = "1.1.0"
+    mockito_version = "2.27.0"
+}
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+    implementation "androidx.appcompat:appcompat:$androidx_appcompat_version"
+    implementation "androidx.core:core-ktx:$androidx_ktx_version"
+    implementation "androidx.fragment:fragment-ktx:$androidx_fragment_version"
+    implementation "io.reactivex.rxjava2:rxandroid:$rxjava2_version"
+    implementation "com.squareup.retrofit2:retrofit:$retrofit2_version"
+    implementation "com.squareup.retrofit2:converter-moshi:$retrofit2_version"
+    implementation "com.squareup.retrofit2:adapter-rxjava2:$retrofit2_adapter_version"
+    implementation "com.squareup.okhttp3:logging-interceptor:$okhttp_logging_interceptor_version"
+    implementation "com.android.support:design:$support_library_version"
+    implementation "com.google.dagger:dagger:$dagger_version"
+    implementation "com.android.support:recyclerview-v7:$recyclerview_version"
+
+    kapt "com.google.dagger:dagger-compiler:$dagger_version"
+
+    testImplementation "junit:junit:$junit_version"
+    testImplementation "androidx.test:core:$androidx_test_version"
+    testImplementation "org.mockito:mockito-inline:$mockito_version"
+}
