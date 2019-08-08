@@ -4,20 +4,21 @@
              android:padding="@dimen/list_item_padding"
              android:layout_marginLeft="@dimen/activity_vertical_margin"
              android:layout_marginRight="@dimen/activity_vertical_margin"
-             android:stretchColumns="*"
-             android:shrinkColumns="*"
              android:layout_height="wrap_content">
 
     <TableRow>
-        <TextView android:text="@string/name" style="@style/TextAppearance.AppCompat.Medium"/>
+        <TextView android:text="@string/name" style="@style/TextAppearance.AppCompat.Medium"
+                  android:paddingEnd="@dimen/list_item_padding"/>
         <TextView android:id="@+id/name" style="@style/TextAppearance.AppCompat.Medium"/>
     </TableRow>
     <TableRow>
-        <TextView android:text="@string/level"/>
+        <TextView android:text="@string/level"
+                  android:paddingEnd="@dimen/list_item_padding"/>
         <TextView android:id="@+id/level"/>
     </TableRow>
     <TableRow>
-        <TextView android:text="@string/keywords"/>
+        <TextView android:text="@string/keywords"
+                  android:paddingEnd="@dimen/list_item_padding"/>
         <TextView android:id="@+id/keywords"/>
     </TableRow>
 </TableLayout>

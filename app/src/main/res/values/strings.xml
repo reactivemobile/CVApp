@@ -17,4 +17,7 @@
     <string name="keywords">Keywords</string>
     <string name="get_cv">Get CV</string>
     <string name="date">Date</string>
+    <string name="work">Work</string>
+    <string name="education">Education</string>
+    <string name="skills">Skills</string>
 </resources>

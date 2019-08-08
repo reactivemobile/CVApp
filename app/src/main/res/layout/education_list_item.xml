@@ -4,28 +4,21 @@
              android:padding="@dimen/list_item_padding"
              android:layout_marginLeft="@dimen/activity_vertical_margin"
              android:layout_marginRight="@dimen/activity_vertical_margin"
-             android:stretchColumns="*"
-             android:shrinkColumns="*"
              android:layout_height="wrap_content">
 
     <TableRow>
-        <TextView android:text="@string/institution" style="@style/TextAppearance.AppCompat.Medium"/>
+        <TextView android:text="@string/institution" style="@style/TextAppearance.AppCompat.Medium"
+                  android:paddingEnd="@dimen/list_item_padding"/>
         <TextView android:id="@+id/institution" style="@style/TextAppearance.AppCompat.Medium"/>
     </TableRow>
     <TableRow>
-        <TextView android:text="@string/date"/>
+        <TextView android:text="@string/date"
+                  android:paddingEnd="@dimen/list_item_padding"/>
         <TextView android:id="@+id/dates"/>
     </TableRow>
     <TableRow>
-        <TextView android:text="@string/area"/>
+        <TextView android:text="@string/area"
+                  android:paddingEnd="@dimen/list_item_padding"/>
         <TextView android:id="@+id/area"/>
-    </TableRow>
-    <TableRow>
-        <TextView android:text="@string/study_type"/>
-        <TextView android:id="@+id/studyType"/>
-    </TableRow>
-    <TableRow>
-        <TextView android:text="@string/summary"/>
-        <TextView android:id="@+id/summary"/>
     </TableRow>
 </TableLayout>

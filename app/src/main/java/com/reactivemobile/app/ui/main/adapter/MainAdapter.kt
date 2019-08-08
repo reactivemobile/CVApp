@@ -4,6 +4,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.annotation.LayoutRes
+import androidx.annotation.StringRes
 import androidx.recyclerview.widget.RecyclerView
 import com.reactivemobile.app.R
 import com.reactivemobile.app.data.model.*
@@ -25,21 +27,17 @@ class MainAdapter(private val cv: CV) : RecyclerView.Adapter<RecyclerView.ViewHo
     private val skillsHeaderPosition = educationHeaderPosition + cv.education.size + 1
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
-        if (viewType == viewTypeBasics) {
-            val view = LayoutInflater.from(parent.context).inflate(R.layout.basics_list_item, parent, false)
-            return BasicsViewHolder(view)
-        } else if (viewType == viewTypeHeader) {
-            val view = LayoutInflater.from(parent.context).inflate(R.layout.header_list_item, parent, false)
-            return HeaderViewHolder(view)
-        } else if (viewType == viewTypeWork) {
-            val view = LayoutInflater.from(parent.context).inflate(R.layout.work_list_item, parent, false)
-            return WorkViewHolder(view)
-        } else if (viewType == viewTypeSkills) {
-            val view = LayoutInflater.from(parent.context).inflate(R.layout.skill_list_item, parent, false)
-            return SkillViewHolder(view)
+        return when (viewType) {
+            viewTypeBasics -> BasicsViewHolder(inflate(parent, R.layout.basics_list_item))
+            viewTypeHeader -> HeaderViewHolder(inflate(parent, R.layout.header_list_item))
+            viewTypeWork -> WorkViewHolder(inflate(parent, R.layout.work_list_item))
+            viewTypeSkills -> SkillViewHolder(inflate(parent, R.layout.skill_list_item))
+            else -> EducationViewHolder(inflate(parent, R.layout.education_list_item))
         }
-        val view = LayoutInflater.from(parent.context).inflate(R.layout.education_list_item, parent, false)
-        return EducationViewHolder(view)
+    }
+
+    private fun inflate(parent: ViewGroup, @LayoutRes id: Int): View {
+        return LayoutInflater.from(parent.context).inflate(id, parent, false)
     }
 
     override fun getItemCount(): Int {
@@ -47,35 +45,43 @@ class MainAdapter(private val cv: CV) : RecyclerView.Adapter<RecyclerView.ViewHo
     }
 
     override fun getItemViewType(position: Int): Int {
-        if (position == basicsHeaderPosition || position == workHeaderPosition || position == educationHeaderPosition || position == skillsHeaderPosition) {
-            return viewTypeHeader
+        return if (position == basicsHeaderPosition
+            || position == workHeaderPosition
+            || position == educationHeaderPosition
+            || position == skillsHeaderPosition
+        ) {
+            viewTypeHeader
         } else if (position == basicsPosition) {
-            return viewTypeBasics
+            viewTypeBasics
         } else if (position < educationHeaderPosition) {
-            return viewTypeWork
+            viewTypeWork
         } else if (position < skillsHeaderPosition) {
-            return viewTypeEducation
+            viewTypeEducation
+        } else {
+            viewTypeSkills
         }
-        return viewTypeSkills
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
-        if (holder is HeaderViewHolder) {
-            holder.setText(if (position == basicsHeaderPosition) "Basics" else if (position == workHeaderPosition) "Work" else if (position == educationHeaderPosition) "Education" else "Skills")
-        } else if (holder is BasicsViewHolder) {
-            holder.setBasics(cv.basics)
-        } else if (holder is WorkViewHolder) {
-            holder.setWork(cv.work[position - (workHeaderPosition + 1)])
-        } else if (holder is EducationViewHolder) {
-            holder.setEducation(cv.education[position - (educationHeaderPosition + 1)])
-        } else if (holder is SkillViewHolder) {
-            holder.setSkill(cv.skills[position - (skillsHeaderPosition + 1)])
+        when (holder) {
+            is HeaderViewHolder -> holder.setText(
+                when (position) {
+                    basicsHeaderPosition -> R.string.basics
+                    workHeaderPosition -> R.string.work
+                    educationHeaderPosition -> R.string.education
+                    else -> R.string.skills
+                }
+            )
+            is BasicsViewHolder -> holder.setBasics(cv.basics)
+            is WorkViewHolder -> holder.setWork(cv.work[position - (workHeaderPosition + 1)])
+            is EducationViewHolder -> holder.setEducation(cv.education[position - (educationHeaderPosition + 1)])
+            is SkillViewHolder -> holder.setSkill(cv.skills[position - (skillsHeaderPosition + 1)])
         }
     }
 
     class HeaderViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-        fun setText(text: String) {
-            (itemView as TextView).text = text
+        fun setText(@StringRes text: Int) {
+            (itemView as TextView).setText(text)
         }
     }
 
@@ -111,7 +117,6 @@ class MainAdapter(private val cv: CV) : RecyclerView.Adapter<RecyclerView.ViewHo
         fun setEducation(education: Education) {
             itemView.findViewById<TextView>(R.id.institution).text = education.institution
             itemView.findViewById<TextView>(R.id.area).text = education.area
-            itemView.findViewById<TextView>(R.id.studyType).text = education.studyType
             itemView.findViewById<TextView>(R.id.dates).text = combineDates(education.startDate, education.endDate)
         }
     }
