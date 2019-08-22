@@ -1,30 +1,30 @@
-package com.reactivemobile.app.ui.main
+package com.reactivemobile.app.ui.cv
 
 import com.reactivemobile.app.data.model.CV
 import com.reactivemobile.app.data.remote.Repository
 import io.reactivex.disposables.CompositeDisposable
 
-class MainPresenter(private val repository: Repository) : MainContract.Presenter {
+class CvPresenter(private val repository: Repository) : CvContract.Presenter {
 
-    private lateinit var mainView: MainContract.View
+    private lateinit var view: CvContract.View
 
     private var compositeDisposable = CompositeDisposable()
 
     override fun fetchCv() {
         compositeDisposable.add(
-            handleLoading(mainView, repository.getCV())
+            handleLoading(view, repository.getCV())
                 .subscribe(this::showCv, this::showError)
         )
     }
 
     private fun showError(throwable: Throwable?) {
-        mainView.hideLoading();
+        view.hideLoading();
         throwable?.printStackTrace()
-        mainView.showError()
+        view.showError()
     }
 
-    override fun attach(view: MainContract.View) {
-        mainView = view
+    override fun attach(view: CvContract.View) {
+        this.view = view
     }
 
     override fun viewReady() {
@@ -38,7 +38,7 @@ class MainPresenter(private val repository: Repository) : MainContract.Presenter
     }
 
     private fun showCv(cv: CV) {
-        mainView.showCv(cv)
+        view.showCv(cv)
     }
 
     override fun onDestroy() {

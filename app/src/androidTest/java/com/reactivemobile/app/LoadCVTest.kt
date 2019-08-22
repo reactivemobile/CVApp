@@ -10,7 +10,7 @@ import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.matcher.ViewMatchers.*
 import androidx.test.rule.ActivityTestRule
 import androidx.test.runner.AndroidJUnit4
-import com.reactivemobile.app.ui.main.MainActivity
+import com.reactivemobile.app.ui.cv.CvActivity
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -20,7 +20,7 @@ class LoadCVTest {
 
     @Rule
     @JvmField
-    public val rule = ActivityTestRule(MainActivity::class.java)
+    public val rule = ActivityTestRule(CvActivity::class.java)
 
     @Test
     fun testCVLoadsOK() {

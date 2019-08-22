@@ -1,4 +1,4 @@
-package com.reactivemobile.app.ui.main
+package com.reactivemobile.app.ui.cv
 
 import android.content.Context
 import android.os.Bundle
@@ -8,48 +8,48 @@ import android.view.View.GONE
 import android.view.View.VISIBLE
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.recyclerview.widget.DividerItemDecoration
 import com.google.android.material.snackbar.Snackbar
 import com.reactivemobile.app.App
 import com.reactivemobile.app.R
 import com.reactivemobile.app.data.model.CV
-import com.reactivemobile.app.ui.main.adapter.MainAdapter
-import kotlinx.android.synthetic.main.main_fragment.*
+import com.reactivemobile.app.ui.cv.adapter.CvAdapter
+import kotlinx.android.synthetic.main.cv_fragment.*
+
 import javax.inject.Inject
 
-class MainFragment : Fragment(), MainContract.View {
+class CvFragment : Fragment(), CvContract.View {
     @Inject
-    lateinit var mainPresenter: MainContract.Presenter
+    lateinit var presenter: CvContract.Presenter
 
     companion object {
-        fun newInstance() = MainFragment()
-        const val TAG = "MainFragment"
+        fun newInstance() = CvFragment()
+        const val TAG = "CvFragment"
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return inflater.inflate(R.layout.main_fragment, container, false)
+        return inflater.inflate(R.layout.cv_fragment, container, false)
     }
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
         (activity?.application as App).appComponent.inject(this)
-        mainPresenter.attach(this)
+        presenter.attach(this)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setupView()
-        mainPresenter.viewReady()
+        presenter.viewReady()
     }
 
     private fun setupView() {
         get_cv.setOnClickListener {
-            mainPresenter.fetchCv()
+            presenter.fetchCv()
         }
     }
 
     override fun showCv(cv: CV) {
-        recycler_view.adapter = MainAdapter(cv)
+        recycler_view.adapter = CvAdapter(cv)
     }
 
     override fun showError() {
@@ -65,7 +65,7 @@ class MainFragment : Fragment(), MainContract.View {
     }
 
     override fun onDestroy() {
-        mainPresenter.onDestroy()
+        presenter.onDestroy()
         super.onDestroy()
     }
 

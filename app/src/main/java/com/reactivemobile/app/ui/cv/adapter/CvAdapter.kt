@@ -1,4 +1,4 @@
-package com.reactivemobile.app.ui.main.adapter
+package com.reactivemobile.app.ui.cv.adapter
 
 import android.view.LayoutInflater
 import android.view.View
@@ -10,7 +10,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.reactivemobile.app.R
 import com.reactivemobile.app.data.model.*
 
-class MainAdapter(private val cv: CV) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+class CvAdapter(private val cv: CV) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     private val viewTypeBasics = 1
     private val viewTypeHeader = 2

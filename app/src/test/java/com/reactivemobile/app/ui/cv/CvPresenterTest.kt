@@ -1,4 +1,4 @@
-package com.reactivemobile.app.ui.main
+package com.reactivemobile.app.ui.cv
 
 import com.reactivemobile.app.data.model.CV
 import com.reactivemobile.app.data.remote.Repository
@@ -11,14 +11,14 @@ import org.mockito.Mockito.*
 import org.mockito.junit.MockitoJUnitRunner
 
 @RunWith(MockitoJUnitRunner::class)
-class MainPresenterTest {
-    lateinit var mainPresenter: MainPresenter
+class CvPresenterTest {
+    lateinit var cvPresenter: CvPresenter
 
     @Mock
     private lateinit var repository: Repository
 
     @Mock
-    private lateinit var mainView: MainContract.View
+    private lateinit var view: CvContract.View
 
     @Before
     fun setUp() {
@@ -26,15 +26,15 @@ class MainPresenterTest {
 
         `when`(repository.getCV()).thenReturn(Single.just(cv))
 
-        mainPresenter = MainPresenter(repository)
-        mainPresenter.attach(mainView)
+        cvPresenter = CvPresenter(repository)
+        cvPresenter.attach(view)
     }
 
     @Test
     fun fetchResults() {
-        mainPresenter.fetchCv()
+        cvPresenter.fetchCv()
 
-        verify(mainView).showLoading()
+        verify(view).showLoading()
         verify(repository).getCV()
     }
 }
