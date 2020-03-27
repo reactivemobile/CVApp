@@ -40,6 +40,10 @@ android {
     }
 
     testBuildType "stub"
+
+    testOptions {
+        unitTests.returnDefaultValues = true
+    }
 }
 
 ext {
@@ -55,7 +59,7 @@ ext {
     gson_version = "2.8.6"
     junit_version = "4.12"
     lifecycle_version = "2.2.0"
-    mockito_version = "2.27.0"
+    mockito_version = "2.2.0"
     okhttp_logging_interceptor_version = "3.12.1"
     recyclerview_version = "28.0.0"
     retrofit2_adapter_version = "2.3.0"
@@ -88,6 +92,7 @@ dependencies {
 
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:$coroutines_version"
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:$coroutines_version"
     implementation fileTree(dir: 'libs', include: ['*.jar'])
 
     implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycle_version"
@@ -96,7 +101,8 @@ dependencies {
 
     kapt "com.google.dagger:dagger-compiler:$dagger_version"
 
+    testImplementation "androidx.arch.core:core-testing:2.1.0"
     testImplementation "androidx.test:core:$androidx_test_version"
     testImplementation "junit:junit:$junit_version"
-    testImplementation "org.mockito:mockito-inline:$mockito_version"
+    testImplementation "com.nhaarman.mockitokotlin2:mockito-kotlin:$mockito_version"
 }
