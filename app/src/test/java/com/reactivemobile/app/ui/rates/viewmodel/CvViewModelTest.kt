@@ -1,4 +1,4 @@
-package com.reactivemobile.app.ui.cv.viewmodel
+package com.reactivemobile.app.ui.rates.viewmodel
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.lifecycle.Observer
@@ -14,7 +14,7 @@ import org.mockito.junit.MockitoJUnitRunner
 @RunWith(MockitoJUnitRunner::class)
 class CvViewModelTest {
 
-    private lateinit var cvViewModel: CvViewModel
+    private lateinit var cvViewModel: RatesViewModel
 
     @Mock
     private lateinit var cv: CV
@@ -40,7 +40,7 @@ class CvViewModelTest {
 
         setupViewModel(repository)
 
-        cvViewModel.fetchCv()
+        cvViewModel.fetchRates()
 
         verify(loadingObserver).onChanged(eq(true))
         verify(cvObserver).onChanged(eq(cv))
@@ -54,15 +54,15 @@ class CvViewModelTest {
 
         setupViewModel(repository)
 
-        cvViewModel.fetchCv()
+        cvViewModel.fetchRates()
 
         verify(errorObserver).onChanged(eq(true))
         verify(cvObserver, never()).onChanged(any())
     }
 
     private fun setupViewModel(repository: Repository) {
-        cvViewModel = CvViewModel(repository)
-        cvViewModel.cv.observeForever(cvObserver)
+        cvViewModel = RatesViewModel(repository)
+        cvViewModel.rates.observeForever(cvObserver)
         cvViewModel.loading.observeForever(loadingObserver)
         cvViewModel.error.observeForever(errorObserver)
     }

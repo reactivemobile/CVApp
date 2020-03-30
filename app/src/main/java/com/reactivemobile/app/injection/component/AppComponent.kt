@@ -1,13 +1,13 @@
 package com.reactivemobile.app.injection.component
 
 import com.reactivemobile.app.injection.module.AppModule
-import com.reactivemobile.app.injection.module.NetworkModule
-import com.reactivemobile.app.ui.cv.CvFragment
+import com.reactivemobile.app.injection.module.RatesNetworkModule
+import com.reactivemobile.app.ui.rates.RatesFragment
 import dagger.Component
 import javax.inject.Singleton
 
 @Singleton
-@Component(modules = [AppModule::class, NetworkModule::class])
+@Component(modules = [AppModule::class, RatesNetworkModule::class])
 interface AppComponent {
-    fun inject(fragment: CvFragment)
+    fun inject(fragment: RatesFragment)
 }

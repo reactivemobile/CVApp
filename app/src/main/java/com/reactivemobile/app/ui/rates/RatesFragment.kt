@@ -1,4 +1,4 @@
-package com.reactivemobile.app.ui.cv
+package com.reactivemobile.app.ui.rates
 
 import android.content.Context
 import android.os.Bundle
@@ -14,23 +14,31 @@ import com.google.android.material.snackbar.Snackbar
 import com.reactivemobile.app.App
 import com.reactivemobile.app.R
 import com.reactivemobile.app.data.remote.Repository
-import com.reactivemobile.app.ui.cv.adapter.CvAdapter
-import com.reactivemobile.app.ui.cv.viewmodel.CvViewModel
-import com.reactivemobile.app.ui.cv.viewmodel.CvViewModelFactory
-import kotlinx.android.synthetic.main.cv_fragment.*
+import com.reactivemobile.app.ui.rates.adapter.RatesAdapter
+import com.reactivemobile.app.ui.rates.viewmodel.RatesViewModel
+import com.reactivemobile.app.ui.rates.viewmodel.RatesViewModelFactory
+import com.reactivemobile.app.util.FlagMapper
+import com.squareup.picasso.Picasso
+import kotlinx.android.synthetic.main.rates_fragment.*
 import javax.inject.Inject
 
-class CvFragment : Fragment() {
+class RatesFragment : Fragment() {
     @Inject
     lateinit var repository: Repository
 
     @Inject
-    lateinit var viewModelFactory: CvViewModelFactory
+    lateinit var viewModelFactory: RatesViewModelFactory
 
-    private lateinit var adapter: CvAdapter
+    @Inject
+    lateinit var flagMapper: FlagMapper
+
+    @Inject
+    lateinit var picasso: Picasso
+
+    private lateinit var adapter: RatesAdapter
 
     companion object {
-        fun newInstance() = CvFragment()
+        fun newInstance() = RatesFragment()
         const val TAG = "CvFragment"
     }
 
@@ -39,7 +47,7 @@ class CvFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        return inflater.inflate(R.layout.cv_fragment, container, false)
+        return inflater.inflate(R.layout.rates_fragment, container, false)
     }
 
     override fun onAttach(context: Context) {
@@ -50,17 +58,17 @@ class CvFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val model: CvViewModel by activityViewModels { viewModelFactory }
-
+        val model: RatesViewModel by activityViewModels { viewModelFactory }
+        model.fetchRates()
         setupView(model)
     }
 
-    private fun setupView(model: CvViewModel) {
-        model.cv.observe(viewLifecycleOwner, Observer {
+    private fun setupView(model: RatesViewModel) {
+        model.rates.observe(viewLifecycleOwner, Observer {
             if (::adapter.isInitialized) {
-                adapter.cv = it
+                adapter.rates = it.rates
             } else {
-                adapter = CvAdapter(it)
+                adapter = RatesAdapter(it.rates, flagMapper, picasso)
                 recycler_view.adapter = adapter
             }
         })
@@ -73,9 +81,9 @@ class CvFragment : Fragment() {
             showMessage(getString(R.string.error_loading_data))
         })
 
-        get_cv.setOnClickListener {
-            model.fetchCv()
-        }
+//        get_cv.setOnClickListener {
+//            model.fetchRates()
+//        }
     }
 
     private fun showLoading(show: Boolean) {

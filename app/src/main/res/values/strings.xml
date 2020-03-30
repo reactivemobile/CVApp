@@ -1,23 +1,5 @@
 <resources>
-    <string name="app_name">CV Viewer</string>
+    <string name="app_name">Rates</string>
     <string name="error_loading_data">Error loading data</string>
-
-    <string name="name">Name</string>
-    <string name="job_title">Job Title</string>
-    <string name="email">Email</string>
-    <string name="phone">Phone</string>
-    <string name="summary">Summary</string>
-    <string name="basics">Basics</string>
-    <string name="position">Position</string>
-    <string name="website">Website</string>
-    <string name="institution">Institution</string>
-    <string name="area">Area</string>
-    <string name="study_type">Study type</string>
-    <string name="level">Level</string>
-    <string name="keywords">Keywords</string>
-    <string name="get_cv">Get CV</string>
-    <string name="date">Date</string>
-    <string name="work">Work</string>
-    <string name="education">Education</string>
-    <string name="skills">Skills</string>
+    <string name="currency_image">Currency image</string>
 </resources>

@@ -4,4 +4,6 @@
     <dimen name="activity_vertical_margin">16dp</dimen>
     <dimen name="list_item_padding">8dp</dimen>
     <dimen name="divider_height">1dp</dimen>
+    <dimen name="row_height">108dp</dimen>
+    <dimen name="flag_width_height">96dp</dimen>
 </resources>
