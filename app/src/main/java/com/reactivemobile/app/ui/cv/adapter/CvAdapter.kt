@@ -10,7 +10,13 @@ import androidx.recyclerview.widget.RecyclerView
 import com.reactivemobile.app.R
 import com.reactivemobile.app.data.model.*
 
-class CvAdapter(private val cv: CV) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+class CvAdapter(cv: CV) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+
+    var cv = cv
+        set(value) {
+            field = value
+            notifyDataSetChanged()
+        }
 
     private val viewTypeBasics = 1
     private val viewTypeHeader = 2
@@ -108,7 +114,8 @@ class CvAdapter(private val cv: CV) : RecyclerView.Adapter<RecyclerView.ViewHold
             itemView.findViewById<TextView>(R.id.company).text = work.company
             itemView.findViewById<TextView>(R.id.position).text = work.position
             itemView.findViewById<TextView>(R.id.website).text = work.website
-            itemView.findViewById<TextView>(R.id.dates).text = combineDates(work.startDate, work.endDate)
+            itemView.findViewById<TextView>(R.id.dates).text =
+                combineDates(work.startDate, work.endDate)
             itemView.findViewById<TextView>(R.id.summary).text = work.summary
         }
     }
@@ -117,7 +124,8 @@ class CvAdapter(private val cv: CV) : RecyclerView.Adapter<RecyclerView.ViewHold
         fun setEducation(education: Education) {
             itemView.findViewById<TextView>(R.id.institution).text = education.institution
             itemView.findViewById<TextView>(R.id.area).text = education.area
-            itemView.findViewById<TextView>(R.id.dates).text = combineDates(education.startDate, education.endDate)
+            itemView.findViewById<TextView>(R.id.dates).text =
+                combineDates(education.startDate, education.endDate)
         }
     }
 

@@ -1,8 +1,19 @@
 package com.reactivemobile.app.data.model
 
-data class CV(val basics: Basics, val work: List<Work>, val education: List<Education>, val skills: List<Skill>)
+data class CV(
+    val basics: Basics,
+    val work: List<Work>,
+    val education: List<Education>,
+    val skills: List<Skill>
+)
 
-data class Basics(val name: String, val label: String, val email: String, val phone: String, val summary: String)
+data class Basics(
+    val name: String,
+    val label: String,
+    val email: String,
+    val phone: String,
+    val summary: String
+)
 
 data class Work(
     val company: String,

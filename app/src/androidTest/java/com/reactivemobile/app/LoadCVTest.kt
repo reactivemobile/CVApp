@@ -9,7 +9,7 @@ import androidx.test.espresso.action.ViewActions.click
 import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.matcher.ViewMatchers.*
 import androidx.test.rule.ActivityTestRule
-import androidx.test.runner.AndroidJUnit4
+import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.reactivemobile.app.ui.cv.CvActivity
 import org.junit.Rule
 import org.junit.Test
@@ -20,25 +20,14 @@ class LoadCVTest {
 
     @Rule
     @JvmField
-    public val rule = ActivityTestRule(CvActivity::class.java)
+    val rule = ActivityTestRule(CvActivity::class.java)
 
     @Test
     fun testCVLoadsOK() {
         onView(withId(R.id.get_cv)).perform(click())
-        Thread.sleep(2000) // TODO Use idling resource
-
         checkCVFieldsExist()
-        Thread.sleep(2000) // TODO Use idling resource
 
         rotateScreen()
-        Thread.sleep(2000) // TODO Use idling resource
-
-        checkCVFieldsExist()
-        Thread.sleep(2000) // TODO Use idling resource
-
-        rotateScreen()
-        Thread.sleep(2000) // TODO Use idling resource
-
         checkCVFieldsExist()
     }
 

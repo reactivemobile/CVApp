@@ -1,33 +1,56 @@
 <?xml version="1.0" encoding="utf-8"?>
 <TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
-             android:layout_width="wrap_content"
-             android:padding="@dimen/list_item_padding"
-             android:layout_marginLeft="@dimen/activity_vertical_margin"
-             android:layout_marginRight="@dimen/activity_vertical_margin"
-             android:layout_height="wrap_content">
+        android:layout_width="wrap_content"
+        android:padding="@dimen/list_item_padding"
+        android:layout_marginLeft="@dimen/activity_vertical_margin"
+        android:layout_marginRight="@dimen/activity_vertical_margin"
+        android:layout_height="wrap_content">
+
     <TableRow>
-        <TextView android:text="@string/name" style="@style/TextAppearance.AppCompat.Medium"
-                  android:paddingEnd="@dimen/list_item_padding"/>
-        <TextView android:id="@+id/name" style="@style/TextAppearance.AppCompat.Medium"/>
+
+        <TextView
+                android:text="@string/name"
+                style="@style/TextAppearance.AppCompat.Medium"
+                android:paddingEnd="@dimen/list_item_padding" />
+
+        <TextView
+                android:id="@+id/name"
+                style="@style/TextAppearance.AppCompat.Medium" />
     </TableRow>
+
     <TableRow>
-        <TextView android:text="@string/job_title"
-                  android:paddingEnd="@dimen/list_item_padding"/>
-        <TextView android:id="@+id/label"/>
+
+        <TextView
+                android:text="@string/job_title"
+                android:paddingEnd="@dimen/list_item_padding" />
+
+        <TextView android:id="@+id/label" />
     </TableRow>
+
     <TableRow>
-        <TextView android:text="@string/email"
-                  android:paddingEnd="@dimen/list_item_padding"/>
-        <TextView android:id="@+id/email"/>
+
+        <TextView
+                android:text="@string/email"
+                android:paddingEnd="@dimen/list_item_padding" />
+
+        <TextView android:id="@+id/email" />
     </TableRow>
+
     <TableRow>
-        <TextView android:text="@string/phone"
-                  android:paddingEnd="@dimen/list_item_padding"/>
-        <TextView android:id="@+id/phone"/>
+
+        <TextView
+                android:text="@string/phone"
+                android:paddingEnd="@dimen/list_item_padding" />
+
+        <TextView android:id="@+id/phone" />
     </TableRow>
+
     <TableRow>
-        <TextView android:text="@string/summary"
-                  android:paddingEnd="@dimen/list_item_padding"/>
-        <TextView android:id="@+id/summary"/>
+
+        <TextView
+                android:text="@string/summary"
+                android:paddingEnd="@dimen/list_item_padding" />
+
+        <TextView android:id="@+id/summary" />
     </TableRow>
 </TableLayout>
