@@ -25,20 +25,9 @@ class LoadCVTest {
     @Test
     fun testCVLoadsOK() {
         onView(withId(R.id.get_cv)).perform(click())
-        Thread.sleep(2000) // TODO Use idling resource
-
         checkCVFieldsExist()
-        Thread.sleep(2000) // TODO Use idling resource
 
         rotateScreen()
-        Thread.sleep(2000) // TODO Use idling resource
-
-        checkCVFieldsExist()
-        Thread.sleep(2000) // TODO Use idling resource
-
-        rotateScreen()
-        Thread.sleep(2000) // TODO Use idling resource
-
         checkCVFieldsExist()
     }
 
