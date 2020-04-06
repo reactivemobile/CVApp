@@ -17,38 +17,35 @@ import java.util.concurrent.TimeUnit
 class RatesViewModel(private val fetchRatesUseCase: FetchRatesUseCase) : ViewModel() {
     val rates = MutableLiveData<RateData>()
 
-    val loading = MutableLiveData<Boolean>()
-
     val error = MutableLiveData<Boolean>()
 
     lateinit var scheduledFuture: ScheduledFuture<*>
 
+    private var baseCurrency = "EUR"
+
+    private val timerTask = object : TimerTask() {
+        override fun run() {
+            fetchRates(baseCurrency)
+        }
+    }
+
     private val scheduler = Executors.newScheduledThreadPool(1)
 
-    fun startFetchingRates(baseCurrency: String = "EUR") {
-        val timerTask = object : TimerTask() {
-            override fun run() {
-                fetchRates(baseCurrency)
-            }
+    fun startFetchingRates(currency: String?) {
+        if (currency != null) {
+            baseCurrency = currency
         }
 
-        if (::scheduledFuture.isInitialized) {
-            scheduledFuture.cancel(false)
+        if (!::scheduledFuture.isInitialized) {
+            scheduledFuture = scheduler.scheduleAtFixedRate(timerTask, 0L, 1, TimeUnit.SECONDS)
         }
-
-        scheduledFuture = scheduler.scheduleAtFixedRate(timerTask, 0L, 1, TimeUnit.SECONDS)
     }
 
     private fun fetchRates(baseCurrency: String) {
-        Log.e("xxx", "fetchrates $baseCurrency")
         viewModelScope.launch {
-            loading.postValue(true)
-
             val rateData = fetchRatesUseCase.getRates(baseCurrency)
 
             handleRateDataResponse(rateData)
-
-            loading.postValue(false)
         }
     }
 

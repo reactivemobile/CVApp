@@ -10,6 +10,7 @@ import androidx.core.widget.doAfterTextChanged
 import com.reactivemobile.app.R
 import com.reactivemobile.app.domain.RateEntry
 import com.reactivemobile.app.presentation.util.CircleTransform
+import com.reactivemobile.app.presentation.util.formatAmount
 import com.squareup.picasso.Picasso
 
 class HeaderView(context: Context?, attrs: AttributeSet?) : ConstraintLayout(context, attrs) {
@@ -35,10 +36,14 @@ class HeaderView(context: Context?, attrs: AttributeSet?) : ConstraintLayout(con
         exchangeRate.editableText.filters = arrayOf(AmountInputFilter())
     }
 
-    fun setRateEntry(rateEntry: RateEntry) {
+    fun setRateEntry(rateEntry: RateEntry, updateAmount: Boolean = false) {
         val currency = rateEntry.currency
         currencyName.text = currency.displayName
         currencyCode.text = currency.currencyCode
+
+        if (updateAmount) {
+            exchangeRate.text = formatAmount(rateEntry.amount)
+        }
 
         picasso.load(rateEntry.path)
             .error(R.drawable.drawable_error_loading_flag)

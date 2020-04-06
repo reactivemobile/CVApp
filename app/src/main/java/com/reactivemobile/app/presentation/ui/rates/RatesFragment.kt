@@ -2,6 +2,7 @@ package com.reactivemobile.app.presentation.ui.rates
 
 import android.content.Context
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -14,7 +15,6 @@ import com.reactivemobile.app.R
 import com.reactivemobile.app.presentation.ui.rates.adapter.RatesAdapter
 import com.reactivemobile.app.presentation.ui.rates.viewmodel.RatesViewModel
 import com.reactivemobile.app.presentation.ui.rates.viewmodel.RatesViewModelFactory
-import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.rates_fragment.*
 import javax.inject.Inject
 
@@ -22,15 +22,12 @@ class RatesFragment : Fragment() {
     @Inject
     lateinit var viewModelFactory: RatesViewModelFactory
 
-    private var baseCurrency = "EUR"
-
     private val adapter: RatesAdapter by lazy { RatesAdapter(rowClickListener) }
 
     private val viewModel: RatesViewModel by activityViewModels { viewModelFactory }
 
     private val rowClickListener = View.OnClickListener { v: View ->
-        baseCurrency = v.tag as String
-        fetchRates(baseCurrency)
+        fetchRates(v.tag as String)
     }
 
     companion object {
@@ -66,27 +63,24 @@ class RatesFragment : Fragment() {
         base_currency_view.setTextChangedListener { e -> viewModel.setBaseAmount(e) }
     }
 
-    private fun fetchRates(currencyCode: String = "EUR") {
-        viewModel.startFetchingRates(currencyCode)
+    private fun fetchRates(currency: String? = null) {
+        viewModel.startFetchingRates(currency)
     }
 
     private fun setupViewModel() {
+
         viewModel.rates.observe(viewLifecycleOwner, Observer {
             adapter.rates = it.rates
             base_currency_view.setRateEntry(it.baseCurrency)
         })
 
-        viewModel.loading.observe(viewLifecycleOwner, Observer {
-            showLoading(it)
-        })
-
         viewModel.error.observe(viewLifecycleOwner, Observer {
             showMessage(getString(R.string.error_loading_data))
         })
-    }
 
-    private fun showLoading(show: Boolean) {
-        // loading_view.visibility = if (show) VISIBLE else GONE
+        viewModel.rates.value?.let {
+            base_currency_view.setRateEntry(it.baseCurrency, true)
+        }
     }
 
     private fun showMessage(message: String) =

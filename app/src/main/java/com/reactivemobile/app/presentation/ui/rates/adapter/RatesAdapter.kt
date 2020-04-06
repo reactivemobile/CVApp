@@ -10,9 +10,9 @@ import androidx.recyclerview.widget.RecyclerView
 import com.reactivemobile.app.R
 import com.reactivemobile.app.domain.RateEntry
 import com.reactivemobile.app.presentation.util.CircleTransform
+import com.reactivemobile.app.presentation.util.formatAmount
 import com.squareup.picasso.Picasso
 import java.math.BigDecimal
-import java.text.DecimalFormat
 
 class RatesAdapter(val rowClickListener: View.OnClickListener) :
     RecyclerView.Adapter<RecyclerView.ViewHolder>() {
@@ -20,8 +20,6 @@ class RatesAdapter(val rowClickListener: View.OnClickListener) :
     init {
         setHasStableIds(true)
     }
-
-    private val decimalFormat = DecimalFormat("###,###.###")
 
     private val picasso = Picasso.get()
 
@@ -88,6 +86,6 @@ class RatesAdapter(val rowClickListener: View.OnClickListener) :
         }
 
         fun setExchangeRate(rate: BigDecimal) =
-            exchangeRate.setText(decimalFormat.format(rate.toDouble()))
+            exchangeRate.setText(formatAmount(rate))
     }
 }
