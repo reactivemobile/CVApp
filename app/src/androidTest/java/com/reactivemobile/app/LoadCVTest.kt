@@ -10,7 +10,7 @@ import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.matcher.ViewMatchers.*
 import androidx.test.rule.ActivityTestRule
 import androidx.test.ext.junit.runners.AndroidJUnit4
-import com.reactivemobile.app.ui.rates.RatesActivity
+import com.reactivemobile.app.presentation.ui.rates.RatesActivity
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith

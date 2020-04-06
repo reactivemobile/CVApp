@@ -9,6 +9,4 @@
         <item name="android:textColor">@color/primary_dark</item>
     </style>
 
-    <style name="Headline" parent="TextAppearance.AppCompat.Headline" />
-
 </resources>

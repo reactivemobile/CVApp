@@ -1,11 +1,9 @@
-package com.reactivemobile.app.ui.rates
+package com.reactivemobile.app.presentation.ui.rates
 
 import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
-import android.view.View.GONE
-import android.view.View.VISIBLE
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
@@ -13,33 +11,31 @@ import androidx.lifecycle.Observer
 import com.google.android.material.snackbar.Snackbar
 import com.reactivemobile.app.App
 import com.reactivemobile.app.R
-import com.reactivemobile.app.data.remote.Repository
-import com.reactivemobile.app.ui.rates.adapter.RatesAdapter
-import com.reactivemobile.app.ui.rates.viewmodel.RatesViewModel
-import com.reactivemobile.app.ui.rates.viewmodel.RatesViewModelFactory
-import com.reactivemobile.app.util.FlagMapper
+import com.reactivemobile.app.presentation.ui.rates.adapter.RatesAdapter
+import com.reactivemobile.app.presentation.ui.rates.viewmodel.RatesViewModel
+import com.reactivemobile.app.presentation.ui.rates.viewmodel.RatesViewModelFactory
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.rates_fragment.*
 import javax.inject.Inject
 
 class RatesFragment : Fragment() {
     @Inject
-    lateinit var repository: Repository
-
-    @Inject
     lateinit var viewModelFactory: RatesViewModelFactory
 
-    @Inject
-    lateinit var flagMapper: FlagMapper
+    private var baseCurrency = "EUR"
 
-    @Inject
-    lateinit var picasso: Picasso
+    private val adapter: RatesAdapter by lazy { RatesAdapter(rowClickListener) }
 
-    private lateinit var adapter: RatesAdapter
+    private val viewModel: RatesViewModel by activityViewModels { viewModelFactory }
+
+    private val rowClickListener = View.OnClickListener { v: View ->
+        baseCurrency = v.tag as String
+        fetchRates(baseCurrency)
+    }
 
     companion object {
         fun newInstance() = RatesFragment()
-        const val TAG = "CvFragment"
+        const val TAG = "RatesFragment"
     }
 
     override fun onCreateView(
@@ -58,36 +54,39 @@ class RatesFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val model: RatesViewModel by activityViewModels { viewModelFactory }
-        model.fetchRates()
-        setupView(model)
+        setupView()
+
+        setupViewModel()
+
+        fetchRates()
     }
 
-    private fun setupView(model: RatesViewModel) {
-        model.rates.observe(viewLifecycleOwner, Observer {
-            if (::adapter.isInitialized) {
-                adapter.rates = it.rates
-            } else {
-                adapter = RatesAdapter(it.rates, flagMapper, picasso)
-                recycler_view.adapter = adapter
-            }
+    private fun setupView() {
+        recycler_view.adapter = adapter
+        base_currency_view.setTextChangedListener { e -> viewModel.setBaseAmount(e) }
+    }
+
+    private fun fetchRates(currencyCode: String = "EUR") {
+        viewModel.startFetchingRates(currencyCode)
+    }
+
+    private fun setupViewModel() {
+        viewModel.rates.observe(viewLifecycleOwner, Observer {
+            adapter.rates = it.rates
+            base_currency_view.setRateEntry(it.baseCurrency)
         })
 
-        model.loading.observe(viewLifecycleOwner, Observer {
+        viewModel.loading.observe(viewLifecycleOwner, Observer {
             showLoading(it)
         })
 
-        model.error.observe(viewLifecycleOwner, Observer {
+        viewModel.error.observe(viewLifecycleOwner, Observer {
             showMessage(getString(R.string.error_loading_data))
         })
-
-//        get_cv.setOnClickListener {
-//            model.fetchRates()
-//        }
     }
 
     private fun showLoading(show: Boolean) {
-        loading_view.visibility = if (show) VISIBLE else GONE
+        // loading_view.visibility = if (show) VISIBLE else GONE
     }
 
     private fun showMessage(message: String) =

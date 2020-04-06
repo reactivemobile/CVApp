@@ -1,4 +1,4 @@
-package com.reactivemobile.app.ui.rates
+package com.reactivemobile.app.presentation.ui.rates
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity

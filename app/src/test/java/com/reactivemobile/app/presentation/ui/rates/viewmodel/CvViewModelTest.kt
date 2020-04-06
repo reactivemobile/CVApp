@@ -1,4 +1,4 @@
-package com.reactivemobile.app.ui.rates.viewmodel
+package com.reactivemobile.app.presentation.ui.rates.viewmodel
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.lifecycle.Observer
